@@ -4,7 +4,7 @@ const resetEL = document.getElementById("reset");
 const timerEL = document.getElementById("timer");
 
 let interval;
-let timeLeft = 1;
+let timeLeft = 1500;
 const audio = new Audio("./audio/level-up-2-199574.mp3");
 
 function updateTimer() {
