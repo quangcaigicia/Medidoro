@@ -5,8 +5,9 @@ const timerEL = document.getElementById("timer");
 const breakEL = document.getElementById("break");
 
 let interval;
-let timeLeft = 2;
-const audio = new Audio("./audio/level-up-2-199574.mp3");
+let timeLeft = 1500;
+const audio_start = new Audio("./audio/level-up-2-199574.mp3");
+const audio_alarm = new Audio("./audio/alarm-bell-47839.mp3");
 
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -23,6 +24,7 @@ function updateTimer() {
 }
 
 function startTimer() {
+  audio_start.play();
   interval = setInterval(() => {
     timeLeft--;
     updateTimer();
@@ -30,7 +32,7 @@ function startTimer() {
       clearInterval(interval);
       delay(1000).then(() => {
         console.log("Time's up!");
-        audio.play();
+        audio_alarm.play();
         alert("Time's up!");
         timeLeft = 1500;
         updateTimer();
@@ -40,16 +42,19 @@ function startTimer() {
 }
 
 function stopTimer() {
+  audio_start.play();
   clearInterval(interval);
 }
 
 function resetTimer() {
+  audio_start.play();
   clearInterval(interval);
   timeLeft = 1500;
   updateTimer();
 }
 
 function breakTimer() {
+  audio_start.play();
   clearInterval(interval);
   timeLeft = 300;
   updateTimer();
