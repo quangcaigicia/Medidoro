@@ -2,10 +2,15 @@ const startEL = document.getElementById("start");
 const stopEL = document.getElementById("stop");
 const resetEL = document.getElementById("reset");
 const timerEL = document.getElementById("timer");
+const breakEL = document.getElementById("break");
 
 let interval;
-let timeLeft = 1500;
+let timeLeft = 2;
 const audio = new Audio("./audio/level-up-2-199574.mp3");
+
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 function updateTimer() {
   let minutes = Math.floor(timeLeft / 60);
@@ -21,12 +26,15 @@ function startTimer() {
   interval = setInterval(() => {
     timeLeft--;
     updateTimer();
-    if (timeLeft < 0) {
+    if (timeLeft === 0) {
       clearInterval(interval);
-      audio.play();
-      alert("Time's up!");
-      timeLeft = 0; // Reset the time
-      updateTimer(); // Make sure the time appear as 00:00
+      delay(1000).then(() => {
+        console.log("Time's up!");
+        audio.play();
+        alert("Time's up!");
+        timeLeft = 1500;
+        updateTimer();
+      });
     }
   }, 1000);
 }
@@ -41,6 +49,13 @@ function resetTimer() {
   updateTimer();
 }
 
+function breakTimer() {
+  clearInterval(interval);
+  timeLeft = 300;
+  updateTimer();
+}
+
 startEL.addEventListener("click", startTimer);
 stopEL.addEventListener("click", stopTimer);
 resetEL.addEventListener("click", resetTimer);
+breakEL.addEventListener("click", breakTimer);
